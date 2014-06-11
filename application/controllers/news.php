@@ -38,7 +38,9 @@ class News extends CI_Controller {
 
         $this->form_validation->set_rules('title', 'Title', 'required');
         $this->form_validation->set_rules('text', 'text', 'required');
+        $data['update'] = false;
 
+        
         if ($this->form_validation->run() === FALSE) {
             $this->load->view('templates/header', $data);
             $this->load->view('news/create');
@@ -47,6 +49,33 @@ class News extends CI_Controller {
             $this->news_model->set_news();
             $this->load->view('news/success');
         }
+    }
+    
+    public function update($slug = NULL)
+    {
+        if ($slug != NULL) //ToDo: deberia validad si el slug no es null... que exista!
+        {
+            $this->load->helper('form');
+            $this->load->library('form_validation');
+
+            $data['title'] = 'Update a news item';
+
+            $this->form_validation->set_rules('title', 'Title', 'required');
+            $this->form_validation->set_rules('text', 'text', 'required');
+            
+            //muestro los datos
+            $data['news'] = $this->news_model->get_news($slug);
+            $data['update'] = true;
+            
+            $this->load->view('templates/header', $data);
+            $this->load->view('news/create', $data);
+            $this->load->view('templates/footer');
+        }
+        else
+        {
+            $this->create();
+        }
+        
     }
 
 }
