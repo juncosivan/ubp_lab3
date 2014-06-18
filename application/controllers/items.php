@@ -37,4 +37,9 @@ class Items  extends CI_Controller{
         $this->load->view('templates/footer');
     }
     
+    public function save()
+    {
+        die(var_dump($this->input->post('items')));
+    }
+    
 }
