@@ -7,8 +7,12 @@ class News extends CI_Controller {
         $this->load->model('news_model');
     }
 
-    public function index() {
-        $data['news'] = $this->news_model->get_news();
+    public function index() { 
+        
+        $this->load->library('table');
+        $this->load->helper('url');
+        
+        $data['news_data'] = $this->news_model->get_news();
         $data['title'] = 'News archive';
 
         $this->load->view('templates/header', $data);
@@ -17,8 +21,9 @@ class News extends CI_Controller {
     }
 
     public function view($slug) {
-        $data['news_item'] = $this->news_model->get_news($slug);
 
+        $data['news_item'] = $this->news_model->get_news($slug);
+ 
         if (empty($data['news_item'])) {
             show_404();
         }
@@ -47,8 +52,17 @@ class News extends CI_Controller {
             $this->load->view('templates/footer');
         } else {
             $this->news_model->set_news();
-            $this->load->view('news/success');
+            $this->index();
         }
+    }
+    public function delete($id = NULL)
+    {
+        if ($id != null)
+        {
+            $this->news_model->delete($id);
+        }
+        
+        $this->index();
     }
     
     public function update($slug = NULL)
