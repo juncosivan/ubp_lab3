@@ -25,7 +25,8 @@ class Orders extends CI_Controller {
         $orders=$this->meli_orders->get_orders($_SESSION['access_token']);
         
         if($orders!=null)
-        var_dump(json_encode($orders));
+        var_dump(json_encode($orders->results));
+        
     }
 
 }
