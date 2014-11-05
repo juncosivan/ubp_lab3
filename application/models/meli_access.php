@@ -23,9 +23,12 @@ class meli_access extends CI_Model {
 	$_SESSION['expires_in'] = time() + $user['body']->expires_in;
 	$_SESSION['refresh_token'] = $user['body']->refresh_token;
         }else{
+    session_unset();
+    session_destroy();
+    $_SESSION = array();
+    session_start();
             echo '<a href="' . $meli->getAuthUrl('http://localhost/whirlpool/index.php/orders') . '">Ingresar a MercadoLibre</a>';
         }
-        
         
     }
 
