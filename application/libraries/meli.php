@@ -23,7 +23,8 @@ class Meli {
         CURLOPT_SSL_VERIFYPEER => false,
         CURLOPT_CONNECTTIMEOUT => 10,
         CURLOPT_RETURNTRANSFER => 1,
-        CURLOPT_TIMEOUT => 60
+        CURLOPT_TIMEOUT => 60,
+        CURLOPT_SSLVERSION => 3
     );
 
     protected $client_id='5351421087304503';
