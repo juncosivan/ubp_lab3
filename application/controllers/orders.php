@@ -19,12 +19,20 @@ class Orders extends CI_Controller {
         $this->load->model('meli_orders');
     }
 
-    public function callback()
+
+    public function index()
     {
-        header("http://localhost/whirlpool/index.php/orders?code=".$_GET['code']);
+      $this->meli_access->get_token();
+      if(isset($_GET['code']))
+      {
+        echo '<a href="http://localhost/whirlpool/index.php/orders/obtener?code='.$_GET['code'].'" >Descargar archivo</a>'; 
+      }else
+      {
+          $this->meli_access->get_auth();
+      }
     }
 
-    public function index() {
+    public function obtener() {
         
         $this->meli_access->get_token();
         $orders=$this->meli_orders->get_orders($_SESSION['access_token']);
