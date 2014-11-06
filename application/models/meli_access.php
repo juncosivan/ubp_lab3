@@ -29,6 +29,8 @@ class meli_access extends CI_Model {
 
     function get_auth()
     {
+        $this->load->library('Meli');
+        $meli = new Meli('1615244148835759', 'IRfmY4x23QZCS80e0d8rKIlaalhEqT4F',$_SESSION['access_token'], $_SESSION['refresh_token']);
         echo '<a href="' . $meli->getAuthUrl('http://localhost/whirlpool/index.php/orders') . '">Ingresar a MercadoLibre</a>';
     }
 }
