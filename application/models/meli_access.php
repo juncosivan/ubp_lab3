@@ -16,18 +16,20 @@ class meli_access extends CI_Model {
     function get_token() {
         session_start('teste');
         $this->load->library('Meli');
-        $meli = new Meli('5351421087304503', 'w9UfX610WYPnVKEkeHXC4Z7Nch0FDUak',$_SESSION['access_token'], $_SESSION['refresh_token']);
+        $meli = new Meli('1615244148835759', 'IRfmY4x23QZCS80e0d8rKIlaalhEqT4F',$_SESSION['access_token'], $_SESSION['refresh_token']);
         if(isset($_GET['code'])){
         $user = $meli->authorize($_GET['code'], 'http://localhost/whirlpool/index.php/orders');    
+        
         $_SESSION['access_token'] = $user['body']->access_token;
 	$_SESSION['expires_in'] = time() + $user['body']->expires_in;
 	$_SESSION['refresh_token'] = $user['body']->refresh_token;
-        }else{
-            echo '<a href="' . $meli->getAuthUrl('http://localhost/whirlpool/index.php/orders') . '">Ingresar a MercadoLibre</a>';
         }
-        
         
     }
 
+    function get_auth()
+    {
+        echo '<a href="' . $meli->getAuthUrl('http://localhost/whirlpool/index.php/orders') . '">Ingresar a MercadoLibre</a>';
+    }
 }
 

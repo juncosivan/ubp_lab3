@@ -20,14 +20,15 @@ class Meli {
 */
     public static $CURL_OPTS = array(
         CURLOPT_USERAGENT => "MELI-PHP-SDK-1.0.0",
+        CURLOPT_SSLVERSION => 3,
         CURLOPT_SSL_VERIFYPEER => false,
         CURLOPT_CONNECTTIMEOUT => 10,
         CURLOPT_RETURNTRANSFER => 1,
-        CURLOPT_TIMEOUT => 60
+        CURLOPT_TIMEOUT => 60,
     );
 
-    protected $client_id='5351421087304503';
-    protected $client_secret='w9UfX610WYPnVKEkeHXC4Z7Nch0FDUak';
+    protected $client_id='1615244148835759';
+    protected $client_secret='IRfmY4x23QZCS80e0d8rKIlaalhEqT4F';
     protected $redirect_uri;
     protected $access_token;
     protected $refresh_token;
