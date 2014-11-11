@@ -35,9 +35,28 @@ class Orders extends CI_Controller {
     public function obtener() {
         
         $this->meli_access->get_token();
-        $orders=$this->meli_orders->get_orders($_SESSION['access_token']);
-        
-        if($orders!=null)
+        $resultados=[];
+        $off=0;$end!=false;
+        $endDate= date('Y/m/d', strtotime(trim("2014-07-01T00:00:00.000-04:00")));
+        while($orders->display!="complete"&&$end!=true)
+        {
+        $orders=$this->meli_orders->get_orders($_SESSION['access_token'], $off);    
+            if(count($orders->results)>0)
+            {
+              foreach($orders->results as $item){
+                $orderDate = date('Y/m/d', strtotime(trim($item->date_closed)));         
+                if($orderDate >= $endDate)
+                {   
+                 array_push($resultados, $item);
+                }else{
+                  $end=true;
+                }
+              }
+            }else $end=true;
+        $off=$off+50;//hardcoding para cantidad de movimientos del offset
+        }
+
+        if(count($resultados)>0)
         {
         
         if(isset($_SESSION['access_token']))
@@ -46,7 +65,7 @@ class Orders extends CI_Controller {
          header("Content-type:   application/x-msexcel; charset=utf-8");
          header("Content-Disposition: attachment; filename=Report_".date("Y-m-d").".xls"); 
         }
-            foreach($orders->results as $data)
+            foreach($resultados as $data)
             {
                 foreach($data->order_items as $item)
                 {
