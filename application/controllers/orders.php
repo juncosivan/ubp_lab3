@@ -37,7 +37,7 @@ class Orders extends CI_Controller {
         $this->meli_access->get_token();
         $resultados=[];
         $off=0;$end!=false;
-        $endDate= date('Y/m/d', strtotime(trim("2014-07-01T00:00:00.000-04:00")));
+        $endDate= date('Y/m/d', strtotime(trim("2014-11-01T00:00:00.000-04:00")));
         while($orders->display!="complete"&&$end!=true)
         {
         $orders=$this->meli_orders->get_orders($_SESSION['access_token'], $off);    
@@ -69,9 +69,15 @@ class Orders extends CI_Controller {
             {
                 foreach($data->order_items as $item)
                 {
+                  //$shipping_data=$this->meli_orders->get_shipping($_SESSION['access_token'], $data->shipping->id, $data->seller->id);    
+                  
+                  //echo $_SESSION['access_token']."<br/>";
+                  //  var_dump($data);
+                  //  exit;
+
                     $date = date('Y/m/d', strtotime(trim($data->date_closed)));                    
                      echo trim($date).";".
-                          $data->id.";".
+                          $data->payments[0]->id.";".
                           $item->item->title.";".
                           $item->quantity.";".
                           $data->buyer->first_name." ".
@@ -81,6 +87,8 @@ class Orders extends CI_Controller {
                           $data->buyer->phone->number.";".
                           $data->buyer->alternative_phone->area_code." - ".
                           $data->buyer->alternative_phone->number.";".
+                          $shipping_data->receiver_address->receiver_name.";".
+                          $shipping_data->receiver_address->receiver_phone.";".
                           $data->shipping->receiver_address->address_line.";".
                           $data->shipping->receiver_address->city->name.";".
                           $data->shipping->receiver_address->state->name.";".

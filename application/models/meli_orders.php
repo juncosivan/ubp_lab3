@@ -26,21 +26,21 @@ class meli_orders extends CI_Model{
                 return NULL;
     }
     
-    function get_shipping($shipping_id, $access_token)
+    function get_shipping($access_token, $shipping_id, $seller)
     {
         if(isset($access_token)&& $access_token!=null ){
         $this->load->library('Meli');
-        $shipping=$this->meli->get("/shipments/".$shipping_id."&access_token=".$access_token);
+        $shipping=$this->meli->get("/shipments/".$shipping_id."?access_token=".$access_token."&caller.id=".$seller);
              return $shipping['body'];
         }
             return NULL;
     }
     
-    function get_payments($collection_id, $access_token)
+    function get_payments($access_token, $collection_id)
     {
         if(isset($access_token)&& $access_token!=null ){
         $this->load->library('Meli');
-        $collection=$this->meli->get("/collections/".$collection_id."&access_token=".$access_token);
+        $collection=$this->meli->get("/collections/".$collection_id."?access_token=".$access_token);
              return $collection['body'];
         }
              return NULL;
