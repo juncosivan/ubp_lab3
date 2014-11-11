@@ -25,7 +25,7 @@ class Orders extends CI_Controller {
       $this->meli_access->get_token();
       if(isset($_GET['code']))
       {
-        echo '<a href="http://localhost/whirlpool/index.php/orders/obtener?code='.$_GET['code'].'" >Descargar archivo</a>'; 
+        echo '<a href="http://www.grupoberta.com/whirlpool/index.php/orders/obtener?code='.$_GET['code'].'" >Descargar archivo</a>'; 
       }else
       {
           $this->meli_access->get_auth();
@@ -44,15 +44,16 @@ class Orders extends CI_Controller {
         {
          header("Content-Type:   application/vnd.ms-excel; charset=utf-8");
          header("Content-type:   application/x-msexcel; charset=utf-8");
-         header("Content-Disposition: attachment; filename=Report_".date("Y-m-d").".csv"); 
+         header("Content-Disposition: attachment; filename=Report_".date("Y-m-d").".xls"); 
         }
             foreach($orders->results as $data)
             {
                 foreach($data->order_items as $item)
                 {
-                     echo $data->date_closed.";".
+                    $date = date('Y/m/d', strtotime(trim($data->date_closed)));                    
+                     echo trim($date).";".
                           $data->id.";".
-                          $item->item->id.";".
+                          $item->item->title.";".
                           $item->quantity.";".
                           $data->buyer->first_name." ".
                           $data->buyer->last_name.";".
@@ -65,16 +66,12 @@ class Orders extends CI_Controller {
                           $data->shipping->receiver_address->city->name.";".
                           $data->shipping->receiver_address->state->name.";".
                           $data->shipping->receiver_address->zip_code.
-                          " \n ";             
+                          " \n";             
                 }
             }
-            
         }else
         {
             $this->meli_access->get_auth();
         }
-        
-        
     }
-
 }

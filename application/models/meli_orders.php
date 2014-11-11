@@ -15,13 +15,14 @@ class meli_orders extends CI_Model{
     
     function get_orders($access_token)
     {
-        if($access_token){
+        
+        if(isset($access_token)&& $access_token!=null ){
         $this->load->library('Meli');
         
         $user=$this->meli->get("/users/me?access_token=".$access_token);
        
         $cust_id=$user['body']->id;   
-        $orders=$this->meli->get("/orders/search?seller=".$cust_id."&access_token=".$access_token);
+        $orders=$this->meli->get("/orders/search?seller=".$cust_id."&sort=date_desc&&access_token=".$access_token);
              return $orders['body'];
         }
                 return NULL;

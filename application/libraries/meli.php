@@ -27,8 +27,8 @@ class Meli {
         CURLOPT_TIMEOUT => 60,
     );
 
-    protected $client_id='1615244148835759';
-    protected $client_secret='IRfmY4x23QZCS80e0d8rKIlaalhEqT4F';
+    protected $client_id='5351421087304503';
+    protected $client_secret='w9UfX610WYPnVKEkeHXC4Z7Nch0FDUak';
     protected $redirect_uri;
     protected $access_token;
     protected $refresh_token;
